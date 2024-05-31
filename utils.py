@@ -3,6 +3,7 @@ from calendar import Calendar
 from datetime import datetime
 import event
 import csv
+import os.path
 
 
 def save_calendar(calendar: Calendar, filename: str):
@@ -11,16 +12,19 @@ def save_calendar(calendar: Calendar, filename: str):
         for e in calendar:
             f.write(date_to_str(e.date_from) + "," + date_to_str(e.date_to) + "," + e.name + "\n")
 
+
 def load_calendar(filename: str) -> Calendar:
-    with open(filename, 'r') as f:
-        events = []
-        reader = csv.reader(f)
-        for row in reader:
-            date_from = parse_date_str(row[0])
-            date_to = parse_date_str(row[1])
-            events.append(event.Event(date_from, date_to, row[2]))
-        calendar = Calendar(events)
-        return calendar
+    if os.path.exists(filename):
+        with open(filename, 'r') as f:
+            events = []
+            reader = csv.reader(f)
+            for row in reader:
+                date_from = parse_date_str(row[0])
+                date_to = parse_date_str(row[1])
+                events.append(event.Event(date_from, date_to, row[2]))
+            calendar = Calendar(events)
+            return calendar
+    return Calendar([])
 
 
 def print_list(lines: List):

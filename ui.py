@@ -7,11 +7,12 @@ import sys
 import calendar_view as view
 
 cur_calendar = Calendar([])
+path = "calendar.csv"
 
 
 def start_main_loop():
     global cur_calendar
-    cur_calendar = utils.load_calendar("calendar.csv")
+    cur_calendar = utils.load_calendar(path)
     execute("show today")
 
     while True:
@@ -41,7 +42,7 @@ def execute(command: str):
             event = get_event_from_command(split[2:])
 
             cur_calendar.add_event(event)
-            utils.save_calendar(cur_calendar, "calendar.csv")
+            utils.save_calendar(cur_calendar, path)
 
             print("Event added")
             utils.print_list(view.generate_day_lines(cur_calendar, event.date_from))
@@ -76,7 +77,7 @@ def execute(command: str):
             event = get_event_from_command(split[2:])
             cur_calendar.remove_event(event)
 
-            utils.save_calendar(cur_calendar, "calendar.csv")
+            utils.save_calendar(cur_calendar, path)
 
             print("Event removed")
             utils.print_list(view.generate_day_lines(cur_calendar, event.date_from))
