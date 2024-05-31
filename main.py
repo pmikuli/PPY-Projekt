@@ -37,11 +37,11 @@ def start_main_loop():
 def execute(command: str):
     command = command.strip().lower()
     if command == "show today":
-        utils.print_list(view.generate_day_lines(cur_calendar, datetime.datetime.now()))
+        view.print_day(cur_calendar, datetime.datetime.now())
     elif command == "show this month":
-        utils.print_list(view.generate_month(cur_calendar, datetime.datetime.now()))
+        view.print_month(datetime.datetime.now())
     elif command == "show this week":
-        utils.print_list(view.generate_week_lines(cur_calendar, datetime.datetime.now()))
+        view.print_week(cur_calendar, datetime.datetime.now())
     elif command.startswith("add event"):
         split = command.split(" ")
         if len(split) <= 6:
@@ -53,7 +53,7 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, path)
 
             print("Event added")
-            utils.print_list(view.generate_day_lines(cur_calendar, event.date_from))
+            view.print_day(cur_calendar, event.date_from)
     elif command.startswith("show week"):
         split = command.split(" ")
         if len(split) < 3:
@@ -61,10 +61,10 @@ def execute(command: str):
         else:
             date = utils.parse_date_str(split[2])
 
-            utils.print_list(view.generate_week_lines(cur_calendar, date))
+            utils.print_list(view.__generate_week_lines(cur_calendar, date))
     elif command.startswith("show day "):
         date = utils.parse_date_str(command.split(" ")[2])
-        utils.print_list(view.generate_day_lines(cur_calendar, date))
+        view.print_day(cur_calendar, date)
     elif command.startswith("show month"):
         split = command.split(" ")
         if len(split) < 4:
@@ -76,7 +76,7 @@ def execute(command: str):
 
             date = datetime.datetime(year, month, day=1)
 
-            utils.print_list(view.generate_month(cur_calendar, date))
+            view.print_month(date)
     elif command.startswith("remove event"):
         split = command.split(" ")
         if len(split) <= 6:
@@ -88,7 +88,7 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, path)
 
             print("Event removed")
-            utils.print_list(view.generate_day_lines(cur_calendar, event.date_from))
+            view.print_day(cur_calendar, event.date_from)
     elif command == "exit":
         sys.exit()
     else:
@@ -101,6 +101,7 @@ def get_event_from_command(split: List[str]) -> Event:
 
     name = ' '.join(split[4:])
     return Event(datetime_from, datetime_to, name)
+
 
 if __name__ == "__main__":
     main()
