@@ -7,8 +7,7 @@ import os.path
 
 
 def save_calendar(calendar: Calendar, path: str):
-    with open(path, 'w') as f:
-        w = csv.writer(f)
+    with open(path, "w") as f:
         for e in calendar:
             f.write(date_to_str(e.date_from) + "," + date_to_str(e.date_to) + "," + e.description + "\n")
 

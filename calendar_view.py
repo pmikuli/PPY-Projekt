@@ -110,15 +110,18 @@ def __generate_month_lines(date: datetime) -> List[str]:
 
         for i in range(7):
             if date.weekday() == i:
-                date_str = ""
-                if __are_days_equal(date, datetime.now()):
-                    date_str = "\033[95m" + str(date.day) + "\033[0m"
+                date_str = "      "
+                if month == date.month:
+                    if __are_days_equal(date, datetime.now()):
+                        date_str = "\033[95m" + str(date.day) + "\033[0m"
+                    else:
+                        date_str = str(date.day)
+                    if date.day < 10:
+                        line += ("  " + date_str + " ")
+                    else:
+                        line += (" " + date_str + " ")
                 else:
-                    date_str = str(date.day)
-                if date.day < 10:
-                    line += ("  " + date_str + " ")
-                else:
-                    line += (" " + date_str + " ")
+                    line += "    "
                 date = date + timedelta(days=1)
             else:
                 line += "    "
