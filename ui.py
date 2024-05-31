@@ -1,5 +1,6 @@
 from calendar import Calendar
 from event import Event
+from typing import List
 import datetime
 import utils
 import sys
@@ -15,7 +16,7 @@ def start_main_loop():
     try:
         while True:
             print("Enter command:")
-            command = input()
+            command = input("> ")
             execute(command)
     except KeyboardInterrupt:
         print("Exiting...")
@@ -34,11 +35,7 @@ def execute(command: str):
         if len(split) <= 6:
             print("Not enough data")
         else:
-            datetime_from = utils.parse_date_str(" ".join(split[2:4]))
-            datetime_to = utils.parse_date_str(" ".join(split[4:6]))
-
-            name = ' '.join(split[5:])
-            event = Event(datetime_from, datetime_to, name)
+            event = get_event_from_command(split[2:])
 
             cur_calendar.add_event(event)
             utils.save_calendar(cur_calendar, "calendar.csv")
@@ -61,7 +58,22 @@ def execute(command: str):
         date = datetime.datetime(year, month, day=1)
 
         utils.print_list(cur_calendar.generate_month(date))
+    elif command.startswith("remove event "):
+        event = get_event_from_command(command.split(" ")[2:])
+        cur_calendar.remove_event(event)
+
+        utils.save_calendar(cur_calendar, "calendar.csv")
+
+        print("Event removed")
     elif command == "exit":
         sys.exit()
     else:
         print("Unknown command")
+
+
+def get_event_from_command(split: List[str]) -> Event:
+    datetime_from = utils.parse_date_str(" ".join(split[0:2]))
+    datetime_to = utils.parse_date_str(" ".join(split[2:4]))
+
+    name = ' '.join(split[4:])
+    return Event(datetime_from, datetime_to, name)

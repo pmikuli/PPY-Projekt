@@ -11,8 +11,10 @@ class Event:
         return iter([self.date_from, self.date_to, self.name])
 
     def __str__(self):
-        return (self.date_from
-                + ","
-                + self.date_to
-                + ","
-                + self.name)
+        return self.date_from + "," + self.date_to + "," + self.name
+
+    def __eq__(self, other):
+        if type(other) is Event:
+            return self.date_from == other.date_from and self.date_to == other.date_to and self.name == other.name
+        else:
+            return False

@@ -42,7 +42,7 @@ def parse_date_str(date_str: str) -> datetime:
 
         hour = int(t.split(":")[0])
         minutes = int(t.split(":")[1])
-        print(day)
+
         return datetime(year, month, day, hour, minutes)
     else:
         return datetime(year, month, day)

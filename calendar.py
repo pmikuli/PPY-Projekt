@@ -5,7 +5,7 @@ from typing import List
 
 
 class Calendar:
-    def __init__(self, events):
+    def __init__(self, events: List[Event]):
         self.events = events
         self.events.sort(key=lambda x: x.date_from)
         self.date_format = "%d-%m-%Y"
@@ -26,6 +26,9 @@ class Calendar:
         self.events.append(event)
         self.events.sort(key=lambda x: x.date_from)
         # TODO add sorting events by date and time
+
+    def remove_event(self, event: Event):
+        self.events.remove(event)
 
 # TODO make static
     def generate_month(self, date: datetime) -> List[str]:
