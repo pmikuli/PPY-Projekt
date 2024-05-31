@@ -33,7 +33,7 @@ def execute(command: str):
     elif command.startswith("add event"):
         split = command.split(" ")
         if len(split) <= 6:
-            print("Not enough data")
+            print("Too few arguments")
         else:
             event = get_event_from_command(split[2:])
 
@@ -41,30 +41,40 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, "calendar.csv")
 
             print("Event added")
-    elif command.startswith("show week "):
+    elif command.startswith("show week"):
         split = command.split(" ")
+        if len(split) < 3:
+            print("Too few arguments")
+        else:
+            date = utils.parse_date_str(split[2])
 
-        date = utils.parse_date_str(split[2])
-
-        utils.print_list(cur_calendar.generate_week_lines(date))
+            utils.print_list(cur_calendar.generate_week_lines(date))
     elif command.startswith("show day "):
         date = utils.parse_date_str(command.split(" ")[2])
         utils.print_list(cur_calendar.generate_day_lines(date))
-    elif command.startswith("show month "):
-        month = command.split(" ")[2]
-        year = int(command.split(" ")[3])
-        month = utils.convert_month_to_num(month)
+    elif command.startswith("show month"):
+        split = command.split(" ")
+        if len(split) < 4:
+            print("Too few arguments")
+        else:
+            month = split[2]
+            year = int(split[3])
+            month = utils.convert_month_to_num(month)
 
-        date = datetime.datetime(year, month, day=1)
+            date = datetime.datetime(year, month, day=1)
 
-        utils.print_list(cur_calendar.generate_month(date))
-    elif command.startswith("remove event "):
-        event = get_event_from_command(command.split(" ")[2:])
-        cur_calendar.remove_event(event)
+            utils.print_list(cur_calendar.generate_month(date))
+    elif command.startswith("remove event"):
+        split = command.split(" ")
+        if len(split) <= 6:
+            print("Too few arguments")
+        else:
+            event = get_event_from_command(split[2:])
+            cur_calendar.remove_event(event)
 
-        utils.save_calendar(cur_calendar, "calendar.csv")
+            utils.save_calendar(cur_calendar, "calendar.csv")
 
-        print("Event removed")
+            print("Event removed")
     elif command == "exit":
         sys.exit()
     else:
