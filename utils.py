@@ -50,3 +50,33 @@ def parse_date_str(date_str: str) -> datetime:
 
 def date_to_str(date: datetime) -> str:
     return date.strftime("%d-%m-%Y %H:%M")
+
+
+def convert_month_to_num(month: str) -> int:
+    month = month.strip().lower()
+    if month == "january":
+        return 1
+    elif month == "february":
+        return 2
+    elif month == "march":
+        return 3
+    elif month == "april":
+        return 4
+    elif month == "may":
+        return 5
+    elif month == "june":
+        return 6
+    elif month == "july":
+        return 7
+    elif month == "august":
+        return 8
+    elif month == "september":
+        return 9
+    elif month == "october":
+        return 10
+    elif month == "november":
+        return 11
+    elif month == "december":
+        return 12
+    else:
+        return -1

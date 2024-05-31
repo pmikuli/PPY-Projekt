@@ -29,8 +29,10 @@ class Calendar:
 
 # TODO make static
     def generate_month(self, date: datetime) -> List[str]:
-        diff = date.day - 1
-        date = date - timedelta(days=diff)
+        if date.day != 1:
+            diff = date.day - 1
+            date = date - timedelta(days=diff)
+        header_str = date.strftime("%B %Y")
         month = date.month
         lines = []
         while month == date.month:
@@ -55,7 +57,7 @@ class Calendar:
         for i in range(len(lines[0])):
             separator += "-"
 
-        result = [separator, center(date.strftime("%B %Y"), len(lines[0])), separator]
+        result = [separator, center(header_str, len(lines[0])), separator]
 
         result.extend(lines)
         result.append(separator)

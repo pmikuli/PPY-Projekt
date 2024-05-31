@@ -6,6 +6,7 @@ import sys
 
 cur_calendar = Calendar([])
 
+
 def start_main_loop():
     global cur_calendar
     cur_calendar = utils.load_calendar("calendar.csv")
@@ -43,12 +44,23 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, "calendar.csv")
 
             print("Event added")
-    elif command.startswith("show week"):
+    elif command.startswith("show week "):
         split = command.split(" ")
 
         date = utils.parse_date_str(split[2])
 
         utils.print_list(cur_calendar.generate_week_lines(date))
+    elif command.startswith("show day "):
+        date = utils.parse_date_str(command.split(" ")[2])
+        utils.print_list(cur_calendar.generate_day_lines(date))
+    elif command.startswith("show month "):
+        month = command.split(" ")[2]
+        year = int(command.split(" ")[3])
+        month = utils.convert_month_to_num(month)
+
+        date = datetime.datetime(year, month, day=1)
+
+        utils.print_list(cur_calendar.generate_month(date))
     elif command == "exit":
         sys.exit()
     else:
