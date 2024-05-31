@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from calendar import Calendar
 from event import Event
 from typing import List

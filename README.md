@@ -3,7 +3,12 @@
 Można w nim zapisać kiedy wydarzenie ma miejsce oraz króki opis tego wydarzenia. 
 # Użycie
 `pycal` przyjmuje tylko jeden opcjonalny argument: ściezkę do pliku kalendarza. 
-W przypadku pominięcia argumentu plik kalendarza będzie zapisywany w katalogu użytkownika.
+W przypadku pominięcia argumentu plik kalendarza będzie zapisywany w katalogu użytkownika. Uruchom program używając komendy:
+```Bash
+./pycal.py
+# lub
+python3 pycal
+```
 
 ## Komendy
 Po uruchomieniu aplikacja poprosi użytkownika o podanie komendy do wykonania.
@@ -20,7 +25,7 @@ Dostępne komendy to:
 - `exit` - zamyka program i zapisuje zmiany w kalendarzu. 
 
 # Dokumentacja
-## Moduł `main`
+## Moduł `pycal`
 Moduł uruchamiający program. Zawiera funkcje pomocnicze, potrzebne do uruchomienia go. 
 ### Publiczne funkcje
 | Funkcja | Opis |
