@@ -16,27 +16,6 @@ def print_month(date: datetime):
     utils.print_list(__generate_month_lines(date))
 
 
-def __generate_week_lines(calendar, date: datetime) -> List[str]:
-    temp = []
-    max_len = 0
-
-    week_start = date - timedelta(days=date.weekday())
-    for i in range(7):
-        lines = __generate_day_lines(calendar, week_start + timedelta(days=i), 41)
-        max_len = max(max_len, len(lines))
-        temp.append(lines)
-
-    result = []
-    for lines in temp:
-        equalized = __equalize_height(lines, max_len)
-        for i in range(max_len):
-            if i < len(result):
-                result[i] = result[i] + equalized[i]
-            else:
-                result.append(equalized[i])
-    return result
-
-
 def __generate_day_lines(calendar, date: datetime, width=80) -> List[str]:
     result = []
 
@@ -47,10 +26,10 @@ def __generate_day_lines(calendar, date: datetime, width=80) -> List[str]:
         if __are_days_equal(event.date_from, date) or __are_days_equal(event.date_to, date):
             if __are_days_equal(event.date_from, event.date_to):
                 line = (event.date_from.strftime("%H:%M") + "-"
-                        + event.date_to.strftime("%H:%M") + " " + event.name)
+                        + event.date_to.strftime("%H:%M") + " " + event.description)
             else:
                 line = (event.date_from.strftime(calendar.date_format + " %H:%M") + " - "
-                        + event.date_to.strftime(calendar.date_format + " %H:%M") + " " + event.name)
+                        + event.date_to.strftime(calendar.date_format + " %H:%M") + " " + event.description)
 
             if len(line) + 4 > width:
                 # save space for "|" at the beginning and end + space
@@ -95,6 +74,27 @@ def __generate_day_lines(calendar, date: datetime, width=80) -> List[str]:
         result.append(line)
     result.append(separator_line)
 
+    return result
+
+
+def __generate_week_lines(calendar, date: datetime) -> List[str]:
+    temp = []
+    max_len = 0
+
+    week_start = date - timedelta(days=date.weekday())
+    for i in range(7):
+        lines = __generate_day_lines(calendar, week_start + timedelta(days=i), 41)
+        max_len = max(max_len, len(lines))
+        temp.append(lines)
+
+    result = []
+    for lines in temp:
+        equalized = __equalize_height(lines, max_len)
+        for i in range(max_len):
+            if i < len(result):
+                result[i] = result[i] + equalized[i]
+            else:
+                result.append(equalized[i])
     return result
 
 
@@ -154,7 +154,7 @@ def __fill(text: str, width: int) -> str:
     return "| " + text + " |"
 
 
-def __equalize_height(lines: List[str], desired_len: int):
+def __equalize_height(lines: List[str], desired_len: int) -> List[str]:
     if len(lines) < desired_len:
         diff = desired_len - len(lines)
         last_line = lines.pop()
@@ -164,7 +164,7 @@ def __equalize_height(lines: List[str], desired_len: int):
     return lines
 
 
-def __are_days_equal(date1, date2):
+def __are_days_equal(date1: datetime, date2: datetime) -> bool:
     return (date1.day == date2.day
             and date1.month == date2.month
             and date1.year == date2.year)

@@ -6,16 +6,16 @@ import csv
 import os.path
 
 
-def save_calendar(calendar: Calendar, filename: str):
-    with open(filename, 'w') as f:
+def save_calendar(calendar: Calendar, path: str):
+    with open(path, 'w') as f:
         w = csv.writer(f)
         for e in calendar:
-            f.write(date_to_str(e.date_from) + "," + date_to_str(e.date_to) + "," + e.name + "\n")
+            f.write(date_to_str(e.date_from) + "," + date_to_str(e.date_to) + "," + e.description + "\n")
 
 
-def load_calendar(filename: str) -> Calendar:
-    if os.path.exists(filename):
-        with open(filename, 'r') as f:
+def load_calendar(path: str) -> Calendar:
+    if os.path.exists(path):
+        with open(path, 'r') as f:
             events = []
             reader = csv.reader(f)
             for row in reader:
@@ -30,6 +30,10 @@ def load_calendar(filename: str) -> Calendar:
 def print_list(lines: List):
     for i in lines:
         print(i)
+
+
+def date_to_str(date: datetime) -> str:
+    return date.strftime("%d-%m-%Y %H:%M")
 
 
 def parse_date_str(date_str: str) -> datetime:
@@ -50,10 +54,6 @@ def parse_date_str(date_str: str) -> datetime:
         return datetime(year, month, day, hour, minutes)
     else:
         return datetime(year, month, day)
-
-
-def date_to_str(date: datetime) -> str:
-    return date.strftime("%d-%m-%Y %H:%M")
 
 
 def convert_month_to_num(month: str) -> int:

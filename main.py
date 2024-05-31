@@ -15,26 +15,26 @@ def main():
     if len(sys.argv) == 2:
         global path
         path = sys.argv[1]
-    start_main_loop()
+    __start_main_loop()
 
 
-def start_main_loop():
+def __start_main_loop():
     global cur_calendar
     cur_calendar = utils.load_calendar(path)
-    execute("show today")
+    __execute("show today")
 
     while True:
         try:
             print("Enter command:")
             command = input("> ")
-            execute(command)
+            __execute(command)
         except KeyboardInterrupt:
             print("Exiting...")
         except Exception as e:
             print("Error when executing command: ", e)
 
 
-def execute(command: str):
+def __execute(command: str):
     command = command.strip().lower()
     if command == "show today":
         view.print_day(cur_calendar, datetime.datetime.now())
@@ -47,7 +47,7 @@ def execute(command: str):
         if len(split) <= 6:
             print("Too few arguments")
         else:
-            event = get_event_from_command(split[2:])
+            event = __get_event_from_command_args(split[2:])
 
             cur_calendar.add_event(event)
             utils.save_calendar(cur_calendar, path)
@@ -82,7 +82,7 @@ def execute(command: str):
         if len(split) <= 6:
             print("Too few arguments")
         else:
-            event = get_event_from_command(split[2:])
+            event = __get_event_from_command_args(split[2:])
             cur_calendar.remove_event(event)
 
             utils.save_calendar(cur_calendar, path)
@@ -95,7 +95,7 @@ def execute(command: str):
         print("Unknown command")
 
 
-def get_event_from_command(split: List[str]) -> Event:
+def __get_event_from_command_args(split: List[str]) -> Event:
     datetime_from = utils.parse_date_str(" ".join(split[0:2]))
     datetime_to = utils.parse_date_str(" ".join(split[2:4]))
 
