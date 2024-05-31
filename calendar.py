@@ -1,4 +1,3 @@
-import utils
 from datetime import datetime
 from datetime import timedelta
 from event import Event
@@ -8,6 +7,7 @@ from typing import List
 class Calendar:
     def __init__(self, events):
         self.events = events
+        self.events.sort(key=lambda x: x.date_from)
         self.date_format = "%d-%m-%Y"
 
     def __iter__(self):
@@ -24,13 +24,10 @@ class Calendar:
 
     def add_event(self, event: Event):
         self.events.append(event)
+        self.events.sort(key=lambda x: x.date_from)
         # TODO add sorting events by date and time
 
-    def print_month(self, date: datetime):
-        print(date.strftime("%B"))
-
     def generate_week_lines(self, date: datetime):
-
         temp = []
         max_len = 0
 
@@ -50,8 +47,6 @@ class Calendar:
                     result.append(equalized[i])
         return result
 
-    def print_week(self, date: datetime):
-        utils.print_list(self.generate_week_lines(date))
 
     def generate_day_lines(self, date: datetime, width=80) -> List[str]:
         result = []
@@ -60,15 +55,16 @@ class Calendar:
         i = 1
 
         for event in self.events:
-            if utils.are_days_equal(event.date_from, date) or utils.are_days_equal(event.date_to, date):
+            if are_days_equal(event.date_from, date) or are_days_equal(event.date_to, date):
                 line = (str(i) + ". " + event.date_from.strftime("%H:%M") + "-"
                         + event.date_to.strftime("%H:%M") + " " + event.name)
 
                 if len(line) + 4 > width:
                     # save space for "|" at the beginning and end + space
                     chunk_size = width - len(str(i)) - 6
-                    lines.append(fill(line[0:chunk_size + len(str(i))], width)) # doesn't require space
-                    chunks = [line[i:i+chunk_size] for i in range(1, len(line), chunk_size)]
+                    start = chunk_size + len(str(i))
+                    lines.append(fill(line[0:start], width)) # doesn't require space
+                    chunks = [line[i:i+chunk_size] for i in range(start, len(line), chunk_size)]
                     for c in chunks:
                         for _ in range(len(str(i)) + 2):
                             c = " " + c
@@ -101,9 +97,6 @@ class Calendar:
 
         return result
 
-    def print_day(self, date: datetime, width=80):
-        utils.print_list(self.generate_day_lines(date, width))
-
 
 # TODO move to utils
 
@@ -133,3 +126,8 @@ def equalize_height(lines: List[str], desired_len: int):
             lines.append(fill("", len(last_line)))
         lines.append(last_line)
     return lines
+
+def are_days_equal(date1, date2):
+    return (date1.day == date2.day
+            and date1.month == date2.month
+            and date1.year == date2.year)
