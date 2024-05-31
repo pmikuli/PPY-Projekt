@@ -9,7 +9,7 @@ def generate_week_lines(calendar, date: datetime):
 
     week_start = date - timedelta(days=date.weekday())
     for i in range(7):
-        lines = calendar.generate_day_lines(week_start + timedelta(days=i), 41)
+        lines = generate_day_lines(calendar, week_start + timedelta(days=i), 41)
         max_len = max(max_len, len(lines))
         temp.append(lines)
 
@@ -83,6 +83,7 @@ def generate_day_lines(calendar, date: datetime, width=80) -> List[str]:
     result.append(separator_line)
 
     return result
+
 
 def generate_month(calendar, date: datetime) -> List[str]:
     if date.day != 1:
