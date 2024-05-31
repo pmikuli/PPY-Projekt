@@ -41,6 +41,7 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, "calendar.csv")
 
             print("Event added")
+            utils.print_list(cur_calendar.generate_day_lines(event.date_from))
     elif command.startswith("show week"):
         split = command.split(" ")
         if len(split) < 3:
@@ -75,6 +76,7 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, "calendar.csv")
 
             print("Event removed")
+            utils.print_list(cur_calendar.generate_day_lines(event.date_from))
     elif command == "exit":
         sys.exit()
     else:
