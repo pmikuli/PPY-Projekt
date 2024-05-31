@@ -23,7 +23,8 @@ def __generate_day_lines(calendar, date: datetime, width=80) -> List[str]:
     i = 1
 
     for event in calendar.events:
-        if __are_days_equal(event.date_from, date) or __are_days_equal(event.date_to, date):
+        if (__are_days_equal(event.date_from, date) or __are_days_equal(event.date_to, date)
+                or (event.date_from < date < event.date_to)):
             if __are_days_equal(event.date_from, event.date_to):
                 line = (event.date_from.strftime("%H:%M") + "-"
                         + event.date_to.strftime("%H:%M") + " " + event.description)
