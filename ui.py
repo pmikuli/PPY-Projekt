@@ -13,13 +13,16 @@ def start_main_loop():
     cur_calendar = utils.load_calendar("calendar.csv")
     execute("show today")
 
-    try:
-        while True:
+
+    while True:
+        try:
             print("Enter command:")
             command = input("> ")
             execute(command)
-    except KeyboardInterrupt:
-        print("Exiting...")
+        except KeyboardInterrupt:
+            print("Exiting...")
+        except Exception as e:
+            print("Error when executing command: ", e)
 
 
 def execute(command: str):
