@@ -5,10 +5,11 @@ import datetime
 import utils
 import sys
 import calendar_view as view
+from pathlib import Path
 
 
 cur_calendar = Calendar([])
-path = "~/calendar.csv"
+path = str(Path.home()) + "/calendar.csv"
 
 
 def main():
@@ -30,6 +31,7 @@ def __start_main_loop():
             __execute(command)
         except KeyboardInterrupt:
             print("Exiting...")
+            return
         except Exception as e:
             print("Error when executing command: ", e)
 
