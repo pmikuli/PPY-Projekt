@@ -38,10 +38,15 @@ class Calendar:
 
             for i in range(7):
                 if date.weekday() == i:
-                    if date.day < 10:
-                        line += ("  " + str(date.day) + " ")
+                    date_str = ""
+                    if are_days_equal(date, datetime.now()):
+                        date_str = "\033[95m" + str(date.day) + "\033[0m"
                     else:
-                        line += (" " + str(date.day) + " ")
+                        date_str = str(date.day)
+                    if date.day < 10:
+                        line += ("  " + date_str + " ")
+                    else:
+                        line += (" " + date_str + " ")
                     date = date + timedelta(days=1)
                 else:
                     line += "    "
@@ -49,10 +54,8 @@ class Calendar:
         separator = ""
         for i in range(len(lines[0])):
             separator += "-"
-        result = []
-        result.append(separator)
-        result.append(center(date.strftime("%B %Y"), len(lines[0])))
-        result.append(separator)
+
+        result = [separator, center(date.strftime("%B %Y"), len(lines[0])), separator]
 
         result.extend(lines)
         result.append(separator)
@@ -119,7 +122,15 @@ class Calendar:
         result.append(center(day_of_the_week_line, width))
 
         date_line = date.strftime(self.date_format)
-        result.append(center(date_line, width))
+        w = width
+        if are_days_equal(date, datetime.now()):
+            date_line = "\033[95m" + date_line + "\033[0m"
+            # The color characters are invisible, but
+            # they still count to len(date_line) which is used
+            # center the text.
+            # Thus, we need to increase width by number of additional characters
+            w = width + 9
+        result.append(center(date_line, w))
 
         result.append(separator_line)
         for line in lines:
