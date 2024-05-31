@@ -27,6 +27,38 @@ class Calendar:
         self.events.sort(key=lambda x: x.date_from)
         # TODO add sorting events by date and time
 
+# TODO make static
+    def generate_month(self, date: datetime) -> List[str]:
+        diff = date.day - 1
+        date = date - timedelta(days=diff)
+        month = date.month
+        lines = []
+        while month == date.month:
+            line = ""
+
+            for i in range(7):
+                if date.weekday() == i:
+                    if date.day < 10:
+                        line += ("  " + str(date.day) + " ")
+                    else:
+                        line += (" " + str(date.day) + " ")
+                    date = date + timedelta(days=1)
+                else:
+                    line += "    "
+            lines.append("| " + line + " |")
+        separator = ""
+        for i in range(len(lines[0])):
+            separator += "-"
+        result = []
+        result.append(separator)
+        result.append(center(date.strftime("%B %Y"), len(lines[0])))
+        result.append(separator)
+
+        result.extend(lines)
+        result.append(separator)
+
+        return result
+
     def generate_week_lines(self, date: datetime):
         temp = []
         max_len = 0
@@ -46,7 +78,6 @@ class Calendar:
                 else:
                     result.append(equalized[i])
         return result
-
 
     def generate_day_lines(self, date: datetime, width=80) -> List[str]:
         result = []
