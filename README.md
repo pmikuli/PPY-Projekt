@@ -11,8 +11,8 @@ Dostępne komendy to:
 - `show today` - wyświetla widok dnia dla dzisiejszego dnia, wypisujący wydarzenia na dany dzień. 
 - `show this month` - wyświetla widok miesiąca dla dzisiejszego dnia
 - `show this week` - wyświetla widok tygodnia dla dzisiejszego dnia. W widoku tygodnia wyświetlane są wszystkie wydarzenia mające miejsce w danym tygodniu. Data dzisiejsza jest oznaczona kolorem fioletowym. 
-- `add event DATE_FROM DATE_TO EVENT_NAME` - komenda przyjmuje 3 argumenty pozycyjne: datę od, datę do oraz nazwę wydarzenia. Daty powinny być w formacie `dd-mm-yyyy HH:MM`. Dla podanych danych tworzone jest wydarzenie po czym jest ono od razu zapisywane do pliku.
-- `remove event DATE_FROM DATE_TO EVENT_NAME` - podobnie jak wyżej, ale zamiast dodawać usuwa wydarzenie.
+- `add event DATE_FROM DATE_TO EVENT_DESCRIPTION` - komenda przyjmuje 3 argumenty pozycyjne: datę od, datę do oraz opis wydarzenia. Daty powinny być w formacie `dd-mm-yyyy HH:MM`. Dla podanych danych tworzone jest wydarzenie po czym jest ono od razu zapisywane do pliku.
+- `remove event DATE_FROM DATE_TO EVENT_DESCRIPTION` - podobnie jak wyżej, ale zamiast dodawać usuwa wydarzenie.
 - `show day DATE` - przyjmuje jeden argument pozycyjny, który jest datą do wyświetlenia. Data powinna mieć format `dd-mm-yyyy`. 
 - `show week DATE`- podobnie jak wyżej, ale pokazuje widok tygodnia w którym znajduje się podana w argumencie data.
 - `show month MONTH_NAME YEAR` - przyjmuje 2 argumenty: nazwę miesiąca oraz rok. Należy podać nazwę miesiąca po angielsku. Wyświetla widok miesiąca dla podanych danych.

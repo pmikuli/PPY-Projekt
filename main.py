@@ -91,6 +91,18 @@ def __execute(command: str):
 
             print("Event removed")
             view.print_day(cur_calendar, event.date_from)
+    elif command == "help":
+        print('''Available commands::
+- `show today` - shows the day view for today.
+- `show this month` - shows the month view for today.
+- `show this week` - shows the week view for today. The week view shows all the events throughout the week.
+- `add event DATE_FROM DATE_TO EVENT_DESCRIPTION` - accepts 3 positional arguments: DATE_FROM, DATE_TO and EVENT_DESCRIPTION. The dates should be in format `dd-mm-yyyy HH:MM`. Adds an event to the calendar using given information. 
+- `remove event DATE_FROM DATE_TO EVENT_DESCRIPTION` - use in a similar fashion as the command above. Removes an event from the calendar.
+- `show day DATE` - Accepts one argument which is the day for which to display the day view. The given date should be formatted as `dd-mm-yyyy`. 
+- `show week DATE`- same as above, but shows the week view for the given day.
+- `show month MONTH_NAME YEAR` - accepts 2 arguments: the name of the month and year. The name should be a full name, for example: "Decemeber".
+- `help`- lists commands and their descriptions.
+- `exit` - closes the application and saves calendar to a file. ''')
     elif command == "exit":
         sys.exit()
     else:
