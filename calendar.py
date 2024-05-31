@@ -73,7 +73,7 @@ class Calendar:
 
         week_start = date - timedelta(days=date.weekday())
         for i in range(7):
-            lines = self.generate_day_lines(week_start + timedelta(days=i), 40)
+            lines = self.generate_day_lines(week_start + timedelta(days=i), 41)
             max_len = max(max_len, len(lines))
             temp.append(lines)
 
@@ -95,8 +95,12 @@ class Calendar:
 
         for event in self.events:
             if are_days_equal(event.date_from, date) or are_days_equal(event.date_to, date):
-                line = (str(i) + ". " + event.date_from.strftime("%H:%M") + "-"
-                        + event.date_to.strftime("%H:%M") + " " + event.name)
+                if are_days_equal(event.date_from, event.date_to):
+                    line = (event.date_from.strftime("%H:%M") + "-"
+                            + event.date_to.strftime("%H:%M") + " " + event.name)
+                else:
+                    line = (event.date_from.strftime(self.date_format + " %H:%M") + " - "
+                            + event.date_to.strftime(self.date_format + " %H:%M") + " " + event.name)
 
                 if len(line) + 4 > width:
                     # save space for "|" at the beginning and end + space
