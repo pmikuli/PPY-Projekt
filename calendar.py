@@ -1,5 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
+from duplicateerror import DuplicateEventException
 from event import Event
 from typing import List
 
@@ -23,9 +24,11 @@ class Calendar:
         raise StopIteration
 
     def add_event(self, event: Event):
-        self.events.append(event)
-        self.events.sort(key=lambda x: x.date_from)
-        # TODO add sorting events by date and time
+        if event not in self.events:
+            self.events.append(event)
+            self.events.sort(key=lambda x: x.date_from)
+        else:
+            raise DuplicateEventException()
 
     def remove_event(self, event: Event):
         self.events.remove(event)
