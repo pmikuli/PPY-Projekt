@@ -7,6 +7,10 @@ import sys
 cur_calendar = Calendar([])
 
 def start_main_loop():
+    global cur_calendar
+    cur_calendar = utils.load_calendar("calendar.csv")
+    execute("show today")
+
     try:
         while True:
             print("Enter command:")
@@ -17,7 +21,7 @@ def start_main_loop():
 
 
 def execute(command: str):
-    command = command.strip()
+    command = command.strip().lower()
     if command == "show today":
         utils.print_list(cur_calendar.generate_day_lines(datetime.datetime.now()))
     elif command == "show this month":
