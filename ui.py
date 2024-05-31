@@ -7,7 +7,7 @@ import sys
 import calendar_view as view
 
 cur_calendar = Calendar([])
-path = "calendar.csv"
+path = "~/calendar.csv"
 
 
 def start_main_loop():
