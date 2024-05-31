@@ -1,18 +1,29 @@
 from typing import List
-
-def save_calendar(calendar, filename):
-    raise NotImplemented
-
-
-def load_calendar(filename):
-    raise NotImplemented
+from calendar import Calendar
+import event
+import csv
 
 
-def are_days_equal(date1, date2):
-    return (date1.day == date2.day
-            and date1.month == date2.month
-            and date1.year == date2.year)
+def save_calendar(calendar: Calendar, filename: str):
+    with open(filename, 'w') as f:
+        w = csv.writer(f)
+        for e in calendar:
+            w.writerow(list(e))
 
-def print_list(list: List):
-    for i in list:
+
+def load_calendar(filename: str) -> Calendar:
+    with open(filename, 'r') as f:
+        events = []
+        reader = csv.reader(f)
+        for row in reader:
+            events.append(event.Event(row[0], row[1], row[2]))
+        calendar = Calendar(events)
+        return calendar
+
+
+
+
+
+def print_list(lines: List):
+    for i in lines:
         print(i)
