@@ -1,6 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
-from duplicateerror import DuplicateEventException
+from duplicate_error import DuplicateEventException
 from event import Event
 from typing import List
 
