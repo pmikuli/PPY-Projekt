@@ -33,29 +33,8 @@ def execute(command: str):
         if len(split) <= 6:
             print("Not enough data")
         else:
-            date_from = split[2]
-            time_from = split[3]
-
-            day = int(date_from.split("-")[0])
-            month = int(date_from.split("-")[1])
-            year = int(date_from.split("-")[2])
-
-            hour = int(time_from.split(":")[0])
-            minutes = int(time_from.split(":")[1])
-
-            datetime_from = datetime.datetime(year, month, day, hour, minutes)
-
-            date_to = split[4]
-            time_to = split[5]
-
-            day = int(date_to.split("-")[0])
-            month = int(date_to.split("-")[1])
-            year = int(date_to.split("-")[2])
-
-            hour = int(time_to.split(":")[0])
-            minutes = int(time_to.split(":")[1])
-
-            datetime_to = datetime.datetime(year, month, day, hour, minutes)
+            datetime_from = utils.parse_date_str(" ".join(split[2:4]))
+            datetime_to = utils.parse_date_str(" ".join(split[4:6]))
 
             name = ' '.join(split[5:])
             event = Event(datetime_from, datetime_to, name)
@@ -67,7 +46,7 @@ def execute(command: str):
     elif command.startswith("show week"):
         split = command.split(" ")
 
-        date = utils.parse_date_str(" ".join(split[2:3]))
+        date = utils.parse_date_str(split[2])
 
         utils.print_list(cur_calendar.generate_week_lines(date))
     elif command == "exit":
