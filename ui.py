@@ -64,10 +64,13 @@ def execute(command: str):
             utils.save_calendar(cur_calendar, "calendar.csv")
 
             print("Event added")
+    elif command.startswith("show week"):
+        split = command.split(" ")
+
+        date = utils.parse_date_str(" ".join(split[2:3]))
+
+        utils.print_list(cur_calendar.generate_week_lines(date))
     elif command == "exit":
         sys.exit()
     else:
         print("Unknown command")
-
-
-
