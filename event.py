@@ -1,5 +1,8 @@
+from datetime import datetime
+
+
 class Event:
-    def __init__(self, date_from, date_to, name):
+    def __init__(self, date_from: datetime, date_to: datetime, name: str):
         self.date_from = date_from
         self.date_to = date_to
         self.name = name
